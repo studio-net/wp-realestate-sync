@@ -1,8 +1,8 @@
 <?php
 
 /*
-Plugin Name: WpPluginGedeonSync
-Description: Synchronizes Wordpress custom posts, with Gedeon API
+Plugin Name: Gedeon Sync
+Description: Synchronizes Wordpress custom posts, from Gedeon API
 Author: Studionet (c)
 Version: 0.1
 Requires at least: 3.5
