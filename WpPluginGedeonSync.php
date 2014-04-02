@@ -132,7 +132,7 @@ class WpPluginGedeonSync {
 
 		if ($interval === null) {
 			// Read $interval from options
-			$options = (array)get_option('gedeon-sync');
+			$options = (array)get_option('gedeon-sync', null);
 			$interval = $options['auto-sync-interval'];
 		}
 
@@ -212,7 +212,7 @@ class WpPluginGedeonSync {
 	 * @return void
 	 */
 	public function cbFieldApiKey() {
-		$options = (array)get_option('gedeon-sync');
+		$options = (array)get_option('gedeon-sync', null);
 		$apiKey = $options['api-key'];
 		echo <<<EOHTML
 		<input type="text" id="api-key"
@@ -227,7 +227,7 @@ EOHTML;
 	 * @return void
 	 */
 	public function cbFieldApiUrl() {
-		$options = (array)get_option('gedeon-sync');
+		$options = (array)get_option('gedeon-sync', null);
 		$apiUrl = $options['api-url'];
 		echo <<<EOHTML
 		<input type="text" id="api-url"
@@ -242,7 +242,7 @@ EOHTML;
 	 * @return void
 	 */
 	public function cbFieldAutoSyncInterval() {
-		$options = (array)get_option('gedeon-sync');
+		$options = (array)get_option('gedeon-sync', null);
 
 		$name = 'auto-sync-interval';
 		$value = $options[$name];
@@ -298,7 +298,7 @@ EOHTML;
 			$this->launchSyncInBackground();
 		}
 
-		$logHistory = (array)get_option('gedeon-sync-log-dates');
+		$logHistory = (array)get_option('gedeon-sync-log-dates', null);
 
 		// Load details about a date if they are requested
 		$details = false;
@@ -398,7 +398,7 @@ EOHTML;
 			require_once(ABSPATH . 'wp-admin/includes/image.php');
 
 			// Read Options
-			$options = (array)get_option('gedeon-sync');
+			$options = (array)get_option('gedeon-sync', null);
 			if (empty($options['api-key']))
 				throw new WpPluginGedeonSyncException(
 					__("Api Key is empty", "wpgedeon"));
@@ -838,7 +838,7 @@ EOHTML;
 			$this->logMessages, WEEK_IN_SECONDS);
 
 		// Save timestamp in an option
-		$logHistory = (array)get_option('gedeon-sync-log-dates');
+		$logHistory = (array)get_option('gedeon-sync-log-dates', null);
 		$logHistory[] = $logDate;
 		// But keep only 30 last logs
 		$logHistory = array_slice($logHistory, -30);
@@ -965,7 +965,7 @@ EOHTML;
 	 */
 	public function applyDefaultOptions() {
 
-		$options = (array)get_option('gedeon-sync');
+		$options = (array)get_option('gedeon-sync', null);
 		$options += array(
 			'api-key'            => '',
 			'api-url'            => 'http://api.gedeon.im',
