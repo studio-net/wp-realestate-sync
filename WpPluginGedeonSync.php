@@ -8,6 +8,8 @@ Version: 0.1
 Requires at least: 3.5
 Author URI: http://www.logiciel-immobilier.com/
 License: LGPL
+Text Domain: wpgedeon
+Domain Path: /lang
 */
 
 require_once dirname(__FILE__) . "/" . "LsiPhpApi/LsiPhpApi.php";
@@ -54,6 +56,8 @@ class WpPluginGedeonSync {
 	private function __construct() {
 
 		$this->initCron();
+
+		add_action('plugins_loaded', array($this, 'cbPluginsLoaded'));
 
 		$me = $this;
 		add_action('wp_loaded', function() use ($me) {
@@ -148,6 +152,17 @@ class WpPluginGedeonSync {
 		// Set the cron as requested.
 		wp_schedule_event(time() + 3600, $interval, 'gedeon-sync-cron');
 
+	}
+
+	/**
+	 * Callback when plugins are loaded ('plugins_loaded')
+	 *
+	 * @return void
+	 */
+	public function cbPluginsLoaded() {
+		// Load plugin textdomain.
+		load_plugin_textdomain('wpgedeon', false,
+			dirname(plugin_basename( __FILE__ )) . '/lang/'); 
 	}
 
 	/**
@@ -816,9 +831,10 @@ EOHTML;
 
 
 			if ($trashedCnt == 0) {
-				$this->log("\n\nNo property deleted.");
+				$this->log("\n\n" . __("No property deleted.", "wpgedeon"));
 			} else {
-				$this->log("\n\nMoved %d property(ies) to trash", $trashedCnt);
+				$this->log("\n\n"
+					. __("Moved %d property(ies) to trash", "wpgedeon"),$trashedCnt);
 			}
 
 

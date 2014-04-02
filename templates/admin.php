@@ -38,8 +38,6 @@
 
 		<p><?=__("Press this button to synchronize the properties from gedon to wpcasa, now.", "wpgedeon")?></p>
 
-		<p><?=__("This syncing is done every hours, automatically.", "wpgedeon")?></p>
-
 		<a href="<?=admin_url('options-general.php?page=gedeon-sync')?>&launch-sync-bg" class="button button-primary"><?=__("Sync Now !", "wpgedeon")?></a>
 
 	<?php endif ?>

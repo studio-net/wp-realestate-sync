@@ -1,0 +1,306 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Gedeon Sync v0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2014-04-02 13:00:12+0000\n"
+"Last-Translator: lsi <wordpress@lsi.im>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#. translators: plugin header field 'Name'
+#: WpPluginGedeonSync.php:0
+#@ wpgedeon
+msgid "Gedeon Sync"
+msgstr "Synchro Gédéon"
+
+#. translators: plugin header field 'Description'
+#: WpPluginGedeonSync.php:0
+#@ wpgedeon
+msgid "Synchronizes Wordpress custom posts, from Gedeon API"
+msgstr "Synchronise les « custom posts » immobilier de wordpress, depuis l'API Gédéon"
+
+#. translators: plugin header field 'Author'
+#: WpPluginGedeonSync.php:0
+#@ wpgedeon
+msgid "Studionet (c)"
+msgstr ""
+
+#. translators: plugin header field 'AuthorURI'
+#: WpPluginGedeonSync.php:0
+#@ wpgedeon
+msgid "http://www.logiciel-immobilier.com/"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: WpPluginGedeonSync.php:0
+#@ wpgedeon
+msgid "0.1"
+msgstr ""
+
+#: WpPluginGedeonSync.php:179
+#@ wpgedeon
+msgid "Parameters"
+msgstr "Paramètres"
+
+#: WpPluginGedeonSync.php:184
+#@ wpgedeon
+msgid "Api Key"
+msgstr "Clé Api"
+
+#: WpPluginGedeonSync.php:188
+#@ wpgedeon
+msgid "Api Url"
+msgstr "Url de l'API"
+
+#: WpPluginGedeonSync.php:192
+#@ wpgedeon
+msgid "AutoSync Interval"
+msgstr "Intervalle de synchronisation automatique"
+
+#: WpPluginGedeonSync.php:266
+#@ wpgedeon
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: WpPluginGedeonSync.php:267
+#@ wpgedeon
+msgid "Hourly"
+msgstr "Toutes les heures"
+
+#: WpPluginGedeonSync.php:268
+#@ wpgedeon
+msgid "Twice Daily"
+msgstr "Deux fois par jour"
+
+#: WpPluginGedeonSync.php:269
+#@ wpgedeon
+msgid "Daily"
+msgstr "Tous les jours"
+
+#: WpPluginGedeonSync.php:284
+#@ wpgedeon
+msgid "Next Sync will be at : "
+msgstr "Prochaine synchro à : "
+
+#: WpPluginGedeonSync.php:325
+#@ wpgedeon
+msgid "No sync log available for this date."
+msgstr "Pas de journal disponible à cette date."
+
+#: WpPluginGedeonSync.php:398
+#@ wpgedeon
+msgid "The syncing is already running; try again in a moment"
+msgstr "Une synchronisation est déjà en cours; essayez à nouveau dans un moment"
+
+#: WpPluginGedeonSync.php:419
+#@ wpgedeon
+msgid "Api Key is empty"
+msgstr "La clé API n'est pas renseignée"
+
+#: WpPluginGedeonSync.php:429
+#@ wpgedeon
+msgid "Could not guess Properties post type"
+msgstr "Impossible de deviner le type de « custom post » immobilier"
+
+#: WpPluginGedeonSync.php:526
+#, php-format
+#@ wpgedeon
+msgid "Already up to date (%s > %s)\n"
+msgstr "Déjà à jour (%s > %s)\n"
+
+#: WpPluginGedeonSync.php:530
+#, php-format
+#@ wpgedeon
+msgid "Not up to date (%s < %s)\n"
+msgstr "N'est pas à jour (%s < %s)\n"
+
+#: WpPluginGedeonSync.php:550
+#, php-format
+#@ wpgedeon
+msgid "New property : %s"
+msgstr "Nouveau bien : %s"
+
+#: WpPluginGedeonSync.php:554
+#, php-format
+#@ wpgedeon
+msgid "Could not create property %s: %s"
+msgstr "N'a pas pu créer le bien %s: %s"
+
+#: WpPluginGedeonSync.php:561
+#, php-format
+#@ wpgedeon
+msgid "Updating property : %s"
+msgstr "Mise à jour du bien : %s"
+
+#: WpPluginGedeonSync.php:565
+#, php-format
+#@ wpgedeon
+msgid "Could not update property %s : %s"
+msgstr "Impossible de mettre à jour le bien %s : %s"
+
+#: WpPluginGedeonSync.php:572
+#, php-format
+#@ wpgedeon
+msgid "Saved %s post %s"
+msgstr "Post %s %s enregistré"
+
+#: WpPluginGedeonSync.php:659
+#, php-format
+#@ wpgedeon
+msgid "%d photo(s) : "
+msgstr "%d photo(s) : "
+
+#: WpPluginGedeonSync.php:784
+#: WpPluginGedeonSync.php:827
+#, php-format
+#@ wpgedeon
+msgid "Error : %s"
+msgstr "Erreur : %s"
+
+#: WpPluginGedeonSync.php:790
+#@ wpgedeon
+msgid ""
+"\n"
+"\n"
+"Looking up obsolete properties."
+msgstr ""
+"\n"
+"\n"
+"Recherche des biens obsolètes."
+
+#: WpPluginGedeonSync.php:810
+#, php-format
+#@ wpgedeon
+msgid "Moving Post %s to trash\n"
+msgstr "Déplacement du Post %s à la corbeille\n"
+
+#: WpPluginGedeonSync.php:822
+#, php-format
+#@ wpgedeon
+msgid "Could not trash post %s : %s"
+msgstr "N'a pu déplacer le post %s dans la corbeille : %s"
+
+#: WpPluginGedeonSync.php:843
+#, php-format
+#@ wpgedeon
+msgid "Fatal Error : %s"
+msgstr "Erreur Fatale : %s"
+
+#: WpPluginGedeonSync.php:1024
+#, php-format
+#@ wpgedeon
+msgid "You must have PHP version %s"
+msgstr "Vous devez avoir PHP en version %s"
+
+#: WpPluginGedeonSync.php:1029
+#, php-format
+#@ wpgedeon
+msgid "You must have Wordpress version %s"
+msgstr "Vous devez avoir Wordpress en version %s"
+
+#: WpPluginGedeonSync.php:1049
+#, php-format
+#@ wpgedeon
+msgid "Unable to activate the plugin <b>%s</b>:"
+msgstr "Impossible d'activer l'extenstion <b>%</b>:"
+
+#: templates/admin.php:6
+#@ wpgedeon
+msgid "Options"
+msgstr "Options"
+
+#: templates/admin.php:14
+#@ wpgedeon
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+#: templates/admin.php:21
+#@ wpgedeon
+msgid "Actions"
+msgstr "Actions"
+
+#: templates/admin.php:27
+#@ wpgedeon
+msgid "The properties are currently syncing with Gedeon."
+msgstr "Les biens immobiliers sont en cours de synchronisation avec Gédéon."
+
+#: templates/admin.php:30
+#@ wpgedeon
+msgid "Press this button to refresh this page."
+msgstr "Appuyez sur ce bouton pour actualiser cette page."
+
+#: templates/admin.php:33
+#@ wpgedeon
+msgid "Refresh"
+msgstr "Actualiser"
+
+#: templates/admin.php:35
+#@ wpgedeon
+msgid "You will be able to look at the log details once the syncing is done."
+msgstr "Vous pourrez consulter les journaux une fois la synchronisation terminée."
+
+#: templates/admin.php:39
+#@ wpgedeon
+msgid "Press this button to synchronize the properties from gedon to wpcasa, now."
+msgstr "Appuyez sur ce bouton pour synchroniser les biens immobilier depuis Gédéon vers wpcasa, maintenant."
+
+#: templates/admin.php:41
+#@ wpgedeon
+msgid "Sync Now !"
+msgstr "Synchroniser Maintenant !"
+
+#: templates/admin.php:46
+#@ wpgedeon
+msgid "Sync Logs"
+msgstr "Journaux de Synchronisation"
+
+#: templates/admin.php:50
+#@ wpgedeon
+msgid "No sync history."
+msgstr "Aucun historique de synchronisation."
+
+#: templates/admin.php:78
+#, php-format
+#@ wpgedeon
+msgid "Sync Logs on %s"
+msgstr "Journal de synchronisation pour le %s"
+
+#: templates/plugin-activated-notice.php:3
+#@ wpgedeon
+msgid "Plugin Gedeon Sync activated."
+msgstr "L'extension « Synchro Gédéon » est activée."
+
+#: templates/plugin-activated-notice.php:6
+#@ wpgedeon
+msgid "Thank you for using the Gedeon Sync plugin."
+msgstr "Merci d'utiliser l'extension « Synchro Gédéon »."
+
+#: templates/plugin-activated-notice.php:10
+#@ wpgedeon
+msgid "You may enter your Gedeon API Key <a href=\"/wp-admin/options-general.php?page=gedeon-sync\">here</a>"
+msgstr "Vous pouvez renseigner votre Clé API Gédéon <a href=\"/wp-admin/options-general.php?page=gedeon-sync\">ici</a>"
+
+#: WpPluginGedeonSync.php:834
+#@ wpgedeon
+msgid "No property deleted."
+msgstr "Aucun bien supprimé."
+
+#: WpPluginGedeonSync.php:837
+#, php-format
+#@ wpgedeon
+msgid "Moved %d property(ies) to trash"
+msgstr "%d biens mis à la corbeille"
+
