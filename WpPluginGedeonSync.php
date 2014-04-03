@@ -769,6 +769,14 @@ EOHTML;
 							if ($extra->value === true and $extra->display)
 								$features[] = $extra->name;
 						}
+
+						// Also adds "favorite" and "exclusivite"
+						if ($ad->extras->type_mandat->value == "exclusif")
+							$features[] = "Exclusivité";
+
+						if ($ad->extras->coup_de_coeur->value)
+							$features[] = "Coup de coeur";
+
 						wp_set_object_terms($postId, $features, "feature");
 
 					}
