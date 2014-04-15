@@ -356,7 +356,7 @@ class LsiPhpApi {
 		// See http://lsi.im/jsondate1 http://lsi.im/jsondate2
 		if (is_string($value)
 			and preg_match('%^\\\/Date\((\d+)\)\\\/$%', $value, $m)) {
-				$ts = (int)((int)($m[1]) / 1000);
+				$ts = (int)(substr($m[1], 0, -3));
 				$d = new DateTime();
 				return $d->setTimestamp($ts);
 			}
