@@ -40,7 +40,7 @@ class WpPluginGedeonSync {
 	 *
 	 * @var array
 	 */
-	private $logMessages = array();
+	public $logMessages = array();
 
 	/**
 	 * WpPluginGedeonSync singleton instance

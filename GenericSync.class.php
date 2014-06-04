@@ -4,7 +4,7 @@
  *
  * @author Olivier Barou <olivier@studio-net.fr>
  */
-class GenericSync {
+abstract class GenericSync {
 	
 	/**
 	 * Singleton instance.
@@ -35,18 +35,14 @@ class GenericSync {
 	 * 
 	 * @return bool
 	 */
-	public static function checkCompatibilty() {
-		return false;
-	}
+	public abstract static function checkCompatibilty();
 	
 	/**
 	 * Synchronize properties with API.
 	 * 
 	 * @return void
 	 */
-	public function doSync() {
-	
-	}
+	public abstract function doSync();
 	
 	/**
 	 * Check if all tools are OK to sync.
