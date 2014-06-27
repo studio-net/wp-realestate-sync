@@ -30,24 +30,30 @@ class WpReSyncDpe extends WpReSyncWidget {
 	 * @param array $instance
 	 */
 	public function widget($args, $instance) {
-
+		
+		$metas = get_post_meta(get_the_ID());		
+		$dpe = _first($metas["_dpe"]);
+		$ges = _first($metas["_ges"]);
+		
+		// If neither en and ges are filled, display nothing
+		if (empty($dpe) and empty($ges))
+			return;
+		
 		echo $args["before_widget"];
 		echo $args["before_title"];
 		echo $instance["title"];
 		echo $args["after_title"];
 		
-		$metas = get_post_meta(get_the_ID());
-		
-		if (!empty($metas["_dpe"]))
+		if (!empty($dpe))
 			printf('<img src="http://dpe.lesiteimmo.com/en/%s?size=180x180" />',
-				$metas["_dpe"][0]);
+				$dpe);
 		
-		if (!empty($metas["_ges"]))
+		if (!empty($ges))
 			printf('<img src="http://dpe.lesiteimmo.com/ges/%s?size=180x180" />',
-				$metas["_ges"][0]);
+				$ges);
 					
-		
 		echo $args["after_widget"];
+
 	}
 
 
