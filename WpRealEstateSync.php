@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__) . "/" . "LsiPhpApi/LsiPhpApi.php";
+require_once dirname(__FILE__) . "/" . "lib/vendor/Drasill/DrQuickTools.inc.php";
 require_once dirname(__FILE__) . "/" . "GenericSync.class.php";
 require_once dirname(__FILE__) . "/widgets/WpReSyncWidget.class.php";
 require_once(ABSPATH . 'wp-admin/includes/taxonomy.php'); 
