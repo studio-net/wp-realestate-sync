@@ -1,39 +1,17 @@
 <?php
 
-/*
-Plugin Name: Gedeon Sync
-Description: Synchronizes Wordpress custom posts, from Gedeon API
-Author: Studionet (c)
-Version: 0.1
-Requires at least: 3.5
-Author URI: http://www.logiciel-immobilier.com/
-License: LGPL
-Text Domain: wpgedeon
-Domain Path: /lang
-*/
-
 require_once dirname(__FILE__) . "/" . "LsiPhpApi/LsiPhpApi.php";
 require_once dirname(__FILE__) . "/" . "GenericSync.class.php";
-
+require_once dirname(__FILE__) . "/widgets/WpReSyncWidget.class.php";
+require_once(ABSPATH . 'wp-admin/includes/taxonomy.php'); 
 /**
  * Plugin's main singleton.
  *
  * Most of the time "ad" is a synonym of "property".
  *
- * By now, this plugin only works with "wpcasa" themes.
- * It's meant to be compatible with other "real estate" themes in future
- * versions.
- *
  * @author Christophe Badoit <c.badoit@lesiteimmo.com>
  */
-class WpPluginGedeonSync {
-
-	/**
-	 * Singleton instance.
-	 *
-	 * @var WpPluginGedeonSync
-	 */
-	private $lsiApi;
+class WpRealEstateSync {
 
 	/**
 	 * Contains logs messages; see log().
@@ -43,9 +21,9 @@ class WpPluginGedeonSync {
 	public $logMessages = array();
 
 	/**
-	 * WpPluginGedeonSync singleton instance
+	 * WpRealEstateSync singleton instance
 	 *
-	 * @var WpPluginGedeonSync
+	 * @var WpRealEstateSync
 	 */
 	private static $instance = null;
 	
@@ -68,12 +46,13 @@ class WpPluginGedeonSync {
 		add_action('plugins_loaded', array($this, 'cbPluginsLoaded'));
 
 		$me = $this;
-		add_action('wp_loaded', function() use ($me) {
+		add_action('after_setup_theme', function() use ($me) {
+			
 			
 			$me->initializeBestSynchoniser();
 
 			
-			if (isset($_GET['gedeon-sync-now'])) {
+			if (isset($_GET['wp-re-sync-now'])) {
 
 				try {
 					$me->doSync();
@@ -84,7 +63,7 @@ class WpPluginGedeonSync {
 
 			} else {
 
-				if (isset($_GET['gedeon-sync-now-bg'])) {
+				if (isset($_GET['wp-re-sync-now-bg'])) {
 					$this->launchSyncInBackground();
 				}
 
@@ -92,9 +71,18 @@ class WpPluginGedeonSync {
 
 		});
 
-		if (get_option('gedeon-sync-just-activated')) {
+		if (get_option('wp-re-sync-just-activated')) {
+
+			// Echo admin notice on plugin activation
 			add_action('admin_notices', array($this, "cbOnActivateAdminNotice"));
-			delete_option('gedeon-sync-just-activated');
+			delete_option('wp-re-sync-just-activated');
+			
+			// Initialize options
+			$this->applyDefaultOptions();
+			
+			// Set plugin as active
+			update_option('wp-re-sync-is-active',true);
+			
 		}
 		
 	}
@@ -102,12 +90,12 @@ class WpPluginGedeonSync {
 	/**
 	 * Returns the singleton instance
 	 *
-	 * @return WpPluginGedeonSync instance
+	 * @return WpRealEstateSync instance
 	 */
 	public static function getInstance() {
 
 		if (self::$instance === null) {
-			self::$instance = new WpPluginGedeonSync();
+			self::$instance = new WpRealEstateSync();
 		}
 		return self::$instance;
 
@@ -133,7 +121,7 @@ class WpPluginGedeonSync {
 	 */
 	private function initCron() {
 
-		add_action('gedeon-sync-cron', array($this, 'cbGedeonSyncCron'));
+		add_action('wp-re-sync-cron', array($this, 'cbGedeonSyncCron'));
 
 	}
 
@@ -147,13 +135,13 @@ class WpPluginGedeonSync {
 
 		if ($interval === null) {
 			// Read $interval from options
-			$options = (array)get_option('gedeon-sync', null);
+			$options = (array)get_option('wp-re-sync', null);
 			$interval = $options['auto-sync-interval'];
 		}
 
-		if (wp_next_scheduled('gedeon-sync-cron')) {
+		if (wp_next_scheduled('wp-re-sync-cron')) {
 			// Clear current cron.
-			wp_clear_scheduled_hook('gedeon-sync-cron');
+			wp_clear_scheduled_hook('wp-re-sync-cron');
 		}
 
 		if ($interval == "disabled")
@@ -161,7 +149,7 @@ class WpPluginGedeonSync {
 			return;
 
 		// Set the cron as requested.
-		wp_schedule_event(time() + 3600, $interval, 'gedeon-sync-cron');
+		wp_schedule_event(time() + 3600, $interval, 'wp-re-sync-cron');
 
 	}
 
@@ -172,7 +160,7 @@ class WpPluginGedeonSync {
 	 */
 	public function cbPluginsLoaded() {
 		// Load plugin textdomain.
-		load_plugin_textdomain('wpgedeon', false,
+		load_plugin_textdomain('wpres', false,
 			dirname(plugin_basename( __FILE__ )) . '/lang/'); 
 	}
 
@@ -183,29 +171,48 @@ class WpPluginGedeonSync {
 	 */
 	public function cbAdminInit() {
 
-		register_setting('gedeon-sync', 'gedeon-sync',
-		  	array($this, 'cbSettingChanged'));
+		register_setting('wp-re-sync', 'wp-re-sync',
+			array($this, 'cbSettingChanged'));
 
 		add_settings_section('parameters',
-			__("Parameters", "wpgedeon"),
+			__("Parameters", "wpres"),
 			array($this, "cbSettingsParameters"),
-		  	'gedeon-sync');
+			'wp-re-sync');
 
 		add_settings_field('api-key',
-		  	__("Api Key", "wpgedeon"),
-			array($this, 'cbFieldApiKey'), 'gedeon-sync', 'parameters');
+			__("Api Key", "wpres"),
+			array($this, 'cbFieldApiKey'), 'wp-re-sync', 'parameters');
 
 		add_settings_field('api-url',
-		  	__("Api Url", "wpgedeon"),
-			array($this, 'cbFieldApiUrl'), 'gedeon-sync', 'parameters');
+			__("Api Url", "wpres"),
+			array($this, 'cbFieldApiUrl'), 'wp-re-sync', 'parameters');
 
 		add_settings_field('auto-sync-interval',
-		  	__("AutoSync Interval", "wpgedeon"),
-		  	array($this, 'cbFieldAutoSyncInterval'), 'gedeon-sync', 'parameters');
+			__("AutoSync Interval", "wpres"),
+			array($this, 'cbFieldAutoSyncInterval'), 'wp-re-sync', 'parameters');
+		
+		add_settings_field('photos-quality',
+			__("Quality of pictures", "wpres"),
+			array($this, 'cbFieldPhotosQuality'), 'wp-re-sync', 'parameters');
+		
+		add_settings_field('photos-size',
+			__("Size of pictures", "wpres"),
+			array($this, 'cbFieldPhotosSize'), 'wp-re-sync', 'parameters');
 
-		wp_enqueue_style('gedeon-sync-stylesheet',
-		  	plugins_url('css/admin.css', __FILE__));
+		wp_enqueue_style('wp-re-sync-stylesheet',
+			plugins_url('css/admin.css', __FILE__));
 
+	}
+	
+	/**
+	 * Callback when plugin is desactivate.
+	 *
+	 * @return void
+	 */
+	public function cbOnDesactivate() {
+		
+		delete_option('wp-re-sync-is-active');
+		
 	}
 
 	/**
@@ -238,12 +245,12 @@ class WpPluginGedeonSync {
 	 * @return void
 	 */
 	public function cbFieldApiKey() {
-		$options = (array)get_option('gedeon-sync', null);
+		$options = (array)get_option('wp-re-sync', null);
 		$apiKey = $options['api-key'];
 		echo <<<EOHTML
 		<input type="text" id="api-key"
 		size="35"
-		name="gedeon-sync[api-key]" value="$apiKey" />
+		name="wp-re-sync[api-key]" value="$apiKey" />
 EOHTML;
 	}
 
@@ -253,12 +260,12 @@ EOHTML;
 	 * @return void
 	 */
 	public function cbFieldApiUrl() {
-		$options = (array)get_option('gedeon-sync', null);
+		$options = (array)get_option('wp-re-sync', null);
 		$apiUrl = $options['api-url'];
 		echo <<<EOHTML
 		<input type="text" id="api-url"
 		size="35"
-		name="gedeon-sync[api-url]" value="$apiUrl" />
+		name="wp-re-sync[api-url]" value="$apiUrl" />
 EOHTML;
 	}
 
@@ -268,19 +275,19 @@ EOHTML;
 	 * @return void
 	 */
 	public function cbFieldAutoSyncInterval() {
-		$options = (array)get_option('gedeon-sync', null);
+		$options = (array)get_option('wp-re-sync', null);
 
 		$name = 'auto-sync-interval';
 		$value = $options[$name];
 
 		$list = array(
-			"disabled"   => __("Disabled"   , "wpgedeon"),
-			"hourly"     => __("Hourly"     , "wpgedeon"),
-			"twicedaily" => __("Twice Daily", "wpgedeon"),
-			"daily"      => __("Daily"      , "wpgedeon"),
+			"disabled"   => __("Disabled"   , "wpres"),
+			"hourly"     => __("Hourly"     , "wpres"),
+			"twicedaily" => __("Twice Daily", "wpres"),
+			"daily"      => __("Daily"      , "wpres"),
 		);
 
-		$html = "<select id=\"$name\" name=\"gedeon-sync[$name]\">";
+		$html = "<select id=\"$name\" name=\"wp-re-sync[$name]\">";
 
 		foreach ($list as $k => $v) {
 			$html .= "<option value=\"$k\" "
@@ -289,16 +296,57 @@ EOHTML;
 		}
 		$html .= '</select>';
 
-		$nextCron = wp_next_scheduled('gedeon-sync-cron');
+		$nextCron = wp_next_scheduled('wp-re-sync-cron');
 		if ($nextCron) {
 			$html .= '<p class="description">'
-				. __("Next Sync will be at : ", "wpgedeon")
+				. __("Next Sync will be at : ", "wpres")
 				. date("d/m/Y H:i", $nextCron) . "</p>";
 		}
 
 		echo $html;
 
 	}
+	
+	/**
+	 * Callback for "field photos-quality" setting option.
+	 *
+	 * @return void
+	 */
+	public function cbFieldPhotosQuality() {
+		
+		$options = (array)get_option('wp-re-sync', null);
+
+		$name = 'photos-quality';
+		$value = $options[$name];
+		
+		$html = "<select id=\"$name\" name=\"wp-re-sync[$name]\">";
+		
+		for ($i=5;$i<=100;$i += 5) {
+			$html .= "<option value=\"$i\" "
+				. selected($value, $i, false)
+				. " >$i</option>";
+		}
+		
+		$html .= '</select>';
+
+		echo $html;
+		
+	}
+	
+		/**
+		 * Callback for "field photo size" setting option.
+		 *
+		 * @return void
+		 */
+		public function cbFieldPhotosSize() {
+			$options = (array)get_option('wp-re-sync', null);
+			$size = $options['photos-size'];
+			echo <<<EOHTML
+			<input type="text" id="photos-size"
+			size="35"
+			name="wp-re-sync[photos-size]" value="$size" />
+EOHTML;
+		}
 
 	/**
 	 * Call back for the admin menu.
@@ -307,8 +355,8 @@ EOHTML;
 	 */
 	public function cbAdminMenu() {
 
-		add_options_page('Gédéon Sync', 'Gédéon Sync',
-		  	'manage_options', 'gedeon-sync', array($this, "cbAdminPage"));
+		add_options_page('RealEstate Sync', 'RealEstate Sync',
+			'manage_options', 'wp-re-sync', array($this, "cbAdminPage"));
 
 	}
 
@@ -324,16 +372,16 @@ EOHTML;
 			$this->launchSyncInBackground();
 		}
 
-		$logHistory = (array)get_option('gedeon-sync-log-dates', null);
+		$logHistory = (array)get_option('wp-re-sync-log-dates', null);
 
 		// Load details about a date if they are requested
 		$details = false;
 		if (isset($_REQUEST['details'])) {
 			$logDate = $_REQUEST['details'];
-			$details = get_transient("gedeon-sync-log-$logDate");
+			$details = get_transient("wp-re-sync-log-$logDate");
 			if ($details == false)
 				$details = array(
-					__("No sync log available for this date.", "wpgedeon"));
+					__("No sync log available for this date.", "wpres"));
 		}
 
 		$syncIsRunning = $this->hasLock();
@@ -350,9 +398,9 @@ EOHTML;
 	 */
 	private function setLock($value = true) {
 		if ($value) {
-			set_transient("gedeon-sync-lock", true, 120);
+			set_transient("wp-re-sync-lock", true, 120);
 		} else {
-			delete_transient("gedeon-sync-lock");
+			delete_transient("wp-re-sync-lock");
 		}
 	}
 
@@ -362,7 +410,7 @@ EOHTML;
 	 * @return bool
 	 */
 	private function hasLock() {
-		return (bool)get_transient("gedeon-sync-lock");
+		return (bool)get_transient("wp-re-sync-lock");
 	}
 	
 	/**
@@ -371,7 +419,7 @@ EOHTML;
 	 * @return void
 	 */
 	public function initializeBestSynchoniser() {
-		$basePath = ABSPATH . "wp-content/plugins/wp-plugin-gedeon-sync/synchronizers";		
+		$basePath = ABSPATH . "wp-content/plugins/wp-realestate-sync/synchronizers";		
 		$dir = opendir($basePath);
 		
 		while ($f = readdir($dir)) {
@@ -411,22 +459,26 @@ EOHTML;
 	 */
 	private function launchSyncInBackground() {
 
-		$syncUrl = site_url("?gedeon-sync-now");
+		$syncUrl = site_url("?wp-re-sync-now");
 		$context = stream_context_create(array(
 			'http' => array(
-				'method' => 'HEAD',
+				// 'method' => 'HEAD',
 				'timeout' => 1,
 			)
 		));
 
-		$fd = fopen($syncUrl, 'rb', false, $context);
+		$fd = fopen($syncUrl, 'rb', false, $context);		
+		
+		// while ($contents = fread($fd, 1000)) {
+		// 	echo $contents;
+		// }
 
 		fclose($fd);
 
 	}
 
 	/**
-	 * Callback for cron event 'gedeon-sync-cron'
+	 * Callback for cron event 'wp-re-sync-cron'
 	 *
 	 * @return void
 	 */
@@ -435,7 +487,7 @@ EOHTML;
 	}
 
 	/**
-	 * Synchronizes from "Gedeon's Ads" to "WpCasa's Properties".
+	 * Synchronizes from "Gedeon's Ads" to theme ads storage.
 	 *
 	 * @return void
 	 */
@@ -565,13 +617,15 @@ EOHTML;
 	 */
 	public function applyDefaultOptions() {
 
-		$options = (array)get_option('gedeon-sync', null);
+		$options = (array)get_option('wp-re-sync', null);
 		$options += array(
 			'api-key'            => '',
 			'api-url'            => 'http://api.gedeon.im',
 			'auto-sync-interval' => 'disabled',
+			'photos-quality'     => 55,
+			'photos-size'         => "1024x768"
 		);
-		update_option('gedeon-sync', $options);
+		update_option('wp-re-sync', $options);
 
 	}
 
@@ -586,77 +640,18 @@ EOHTML;
 
 	}
 
-	/**
-	 * Called when this plugin is activated.
-	 *
-	 * Checks php version.
-	 *
-	 * @return void
-	 */
-	public static function onActivate() {
-
-		global $wp_version;
-
-		// Check failures messages are stored here.
-		$errors = array();
-
-		$minPhpVersion = "5.3.0";
-		$minWpVersion  = "3.5";
-
-		if (version_compare(PHP_VERSION, $minPhpVersion, '<'))
-			$errors[] = sprintf(
-				__("You must have PHP version %s", "wpgedeon"),
-			  	$minPhpVersion);
-
-		if (version_compare($wp_version, $minWpVersion, '<'))
-			$errors[] = sprintf(
-				__("You must have Wordpress version %s", "wpgedeon"),
-				$minWpVersion);
-
-		if (empty($errors)) {
-			// All went well.
-
-			$inst = self::getInstance();
-
-			$inst->applyDefaultOptions();
-
-			update_option('gedeon-sync-just-activated', true);
-			return;
-
-		}
-
-		// Disabled this plugin.
-		deactivate_plugins(basename(__FILE__));
-
-		// Die, explaining why.
-		$text = sprintf(
-			__("Unable to activate the plugin <b>%s</b>:", "wpgedeon"),
-			"WpPluginGedeonSync");
-
-		$text .= "<ul><li>" . join("</li><li>", $errors) . "</li></ul>";
-
-		wp_die($text, 'Plugin Activation Error', array(
-			'response'  => 200,
-			'back_link' => true
-		));
-
-	}
-
 }
 
 
 
 /**
- * Dedicated Exception for WpPluginGedeonSync
+ * Dedicated Exception for WpRealEstateSync
  *
  * @author Christophe Badoit <c.badoit@lesiteimmo.com>
  */
-class WpPluginGedeonSyncException extends Exception {}
+class WpRealEstateSyncException extends Exception {}
 
-
-// Hook when plugin is activated.
-register_activation_hook(__FILE__, array('WpPluginGedeonSync', 'onActivate'));
 
 // Initialize the plugin
-$instance = WpPluginGedeonSync::getInstance();
+$instance = WpRealEstateSync::getInstance();
 add_action('init', array($instance, "init"));

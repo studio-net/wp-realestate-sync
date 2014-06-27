@@ -1,6 +1,6 @@
 <?
 /**
- * Generic synchroniser.
+ * Synchronise ads for Decorum theme : http://themeshift.com/theme/decorum/.
  *
  * @author Olivier Barou <olivier@studio-net.fr>
  */
@@ -11,7 +11,10 @@ class DecorumSync extends GenericSync {
 	 * 
 	 * @return void
 	 */
-	public function __construct() {
+	public function __construct() {		
+		
+		$this->slug = "decorum";
+		
 		parent::__construct();
 
 	}
@@ -48,22 +51,13 @@ class DecorumSync extends GenericSync {
 	 */
 	public function doSync() {
 		
-		$this->setLock(false);
-		
-		if ($this->hasLock())
-			throw new WpPluginGedeonSyncException(
-				__("The syncing is already running; try again in a moment",
-			  	"wpgedeon"));
-
-		$this->setLock();
-
 		try {
 
 			// Check sync is ready
 			$this->initializeSync();
 			
 			// Read Options
-			$options = (array)get_option('gedeon-sync', null);
+			$options = (array)get_option('wp-re-sync', null);
 
 			// The "post type" used for realestate properties
 			$adPostType = "sale";
@@ -107,10 +101,10 @@ class DecorumSync extends GenericSync {
 			$seenPostsIds = array();
 
 			// Load ads by batches, work until all results are fetched
-			$offset = 3;
-			$limit  = 2;
+			$offset = 0;
+			$limit  = 100;
 			$adCnt = 0;
-			while ($offset == 3) {
+			while (true) {
 
 				try {
 
@@ -178,11 +172,11 @@ class DecorumSync extends GenericSync {
 							$adTime = $ad->stats->modified->modify('+ 2 hours');
 
 							if ($postTime > $adTime) {
-								$this->plugin->log(__("Already up to date (%s > %s)\n", 'wpgedeon'),
+								$this->plugin->log(__("Already up to date (%s > %s)\n", 'wpres'),
 									$postTime->format('c'), $adTime->format('c'));
 								continue;
 							} else {
-								$this->plugin->log(__("Not up to date (%s < %s)\n", 'wpgedeon'),
+								$this->plugin->log(__("Not up to date (%s < %s)\n", 'wpres'),
 									$postTime->format('c'), $adTime->format('c'));
 							}
 
@@ -201,29 +195,29 @@ class DecorumSync extends GenericSync {
 						if (empty($postData['ID'])) {
 
 							$this->plugin->log(
-								__("New property : %s", "wpgedeon") . "\n", $ad->id);
+								__("New property : %s", "wpres") . "\n", $ad->id);
 							$postId = wp_insert_post($postData, true);
 							if (is_wp_error($postId)) {
-								throw new WpPluginGedeonSyncException(sprintf(
-									__("Could not create property %s: %s", "wpgedeon"),
+								throw new WpRealEstateSyncException(sprintf(
+									__("Could not create property %s: %s", "wpres"),
 									$ad->id, $postId->get_error_message()));
 							}
 
 						} else {
 
 							$this->plugin->log(
-								__("Updating property : %s", "wpgedeon") . "\n", $ad->id);
+								__("Updating property : %s", "wpres") . "\n", $ad->id);
 							$res = wp_update_post($postData, true);
 							if (is_wp_error($res)) {
-								throw new WpPluginGedeonSyncException(sprintf(
-									__("Could not update property %s : %s", "wpgedeon"),
+								throw new WpRealEstateSyncException(sprintf(
+									__("Could not update property %s : %s", "wpres"),
 									$ad->id, $res->get_error_message()));
 							}
 							$postId = $postData['ID'];
 
 						}
 
-						$this->plugin->log(__("Saved %s post %s", "wpgedeon") . "\n",
+						$this->plugin->log(__("Saved %s post %s", "wpres") . "\n",
 							$adPostType, $postId);
 
 						// Bulk-update of post's metas
@@ -291,7 +285,7 @@ class DecorumSync extends GenericSync {
 
 						sort($currentPhotos);
 
-						$this->plugin->log(__("%d photo(s) : ", "wpgedeon"), count($ad->photos));
+						$this->plugin->log(__("%d photo(s) : ", "wpres"), count($ad->photos));
 						foreach ($ad->photos as $photoCnt => $photo) {
 
 							// Read photo timestamp, from URL last path :
@@ -424,13 +418,13 @@ class DecorumSync extends GenericSync {
 						break;
 
 				} catch (Exception $e) {
-					$this->plugin->log(__('Error : %s', "wpgedeon"), $e->getMessage());
+					$this->plugin->log(__('Error : %s', "wpres"), $e->getMessage());
 				}
 
 			}
 
 			// Now, let's delete (move to trash, actually) the posts we did not see.
-			$this->plugin->log(__("\n\nLooking up obsolete properties.", "wpgedeon"));
+			$this->plugin->log(__("\n\nLooking up obsolete properties.", "wpres"));
 
 			$trashedCnt = 0;
 
@@ -450,7 +444,7 @@ class DecorumSync extends GenericSync {
 					$this->setLock();
 
 					// Move this post to trash.
-					$this->plugin->log(__("Moving Post %s to trash\n", "wpgedeon"),
+					$this->plugin->log(__("Moving Post %s to trash\n", "wpres"),
 						$post->ID);
 
 					$postData = array(
@@ -461,29 +455,29 @@ class DecorumSync extends GenericSync {
 
 					if (is_wp_error($res)) {
 
-						throw new WpPluginGedeonSyncException(sprintf(
-							__("Could not trash post %s : %s", "wpgedeon"),
+						throw new WpRealEstateSyncException(sprintf(
+							__("Could not trash post %s : %s", "wpres"),
 							$post->ID, $res->get_error_message()));
 					}
 
 				} catch (Exception $e) {
-					$this->plugin->log(__('Error : %s', "wpgedeon"), $e->getMessage());
+					$this->plugin->log(__('Error : %s', "wpres"), $e->getMessage());
 				}
 
 			}
 
 
 			if ($trashedCnt == 0) {
-				$this->plugin->log("\n\n" . __("No property deleted.", "wpgedeon"));
+				$this->plugin->log("\n\n" . __("No property deleted.", "wpres"));
 			} else {
 				$this->plugin->log("\n\n"
-					. __("Moved %d property(ies) to trash", "wpgedeon"),$trashedCnt);
+					. __("Moved %d property(ies) to trash", "wpres"),$trashedCnt);
 			}
 
 
 		} catch (Exception $e) {
 
-			$this->plugin->log(__('Fatal Error : %s', "wpgedeon"), $e->getMessage());
+			$this->plugin->log(__('Fatal Error : %s', "wpres"), $e->getMessage());
 			$this->plugin->log($e->getTraceAsString());
 			$this->setLock(false);
 
@@ -494,15 +488,15 @@ class DecorumSync extends GenericSync {
 
 		// Save log in a transient
 		$logDate = date('c');
-		set_transient("gedeon-sync-log-$logDate",
+		set_transient("wp-re-sync-log-$logDate",
 			$this->plugin->logMessages, WEEK_IN_SECONDS);
 
 		// Save timestamp in an option
-		$logHistory = (array)get_option('gedeon-sync-log-dates', null);
+		$logHistory = (array)get_option('wp-re-sync-log-dates', null);
 		$logHistory[] = $logDate;
 		// But keep only 30 last logs
 		$logHistory = array_slice($logHistory, -30);
-		update_option('gedeon-sync-log-dates', $logHistory);
+		update_option('wp-re-sync-log-dates', $logHistory);
 
 		die('<p>Done Syncing</p>');
 	}

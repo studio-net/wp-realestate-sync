@@ -1,14 +1,14 @@
-body.settings_page_gedeon-sync .gedeonLogo {
+body.settings_page_wp-re-sync .gedeonLogo {
 	height     : 100px;
 	width      : 314px;
 	background : url(gedeon-logo.png) no-repeat left 50%;
 }
 
-body.settings_page_gedeon-sync h2 {
+body.settings_page_wp-re-sync h2 {
 	margin-top: 1em;
 }
 
-body.settings_page_gedeon-sync .logHistory {
+body.settings_page_wp-re-sync .logHistory {
 
 	max-height          : 140px;
 	overflow            : auto;
@@ -18,28 +18,28 @@ body.settings_page_gedeon-sync .logHistory {
 
 } 
 
-body.settings_page_gedeon-sync .logHistory li {
+body.settings_page_wp-re-sync .logHistory li {
 
 	padding-left: 20px;
 	background: url(http://icons.lsi.im/fatcow/16x16/bullet_blue.png) no-repeat left 50%;
 
 }
 
-body.settings_page_gedeon-sync .logHistory li:hover {
+body.settings_page_wp-re-sync .logHistory li:hover {
 	background-color: #ccc;
 }
 
 
 
 
-body.settings_page_gedeon-sync .logDetails {
+body.settings_page_wp-re-sync .logDetails {
 	margin: 20px;
 	background-color: white;
 	border: 1px double #777;
 	padding: 5px;
 }
 
-body.settings_page_gedeon-sync .logDetails pre {
+body.settings_page_wp-re-sync .logDetails pre {
 	max-height: 300px;
 	overflow: auto;
 	padding: 15px;

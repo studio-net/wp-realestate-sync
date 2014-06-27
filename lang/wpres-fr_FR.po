@@ -1,0 +1,364 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP RealEstate Sync v0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-10 12:00+0100\n"
+"PO-Revision-Date: 2014-06-13 14:29:26+0000\n"
+"Last-Translator: Olivier Barou <olivier@studio-net.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: GenericSync.class.php:64
+#@ wpres
+msgid "The syncing is already running; try again in a moment"
+msgstr "Une synchronisation est déjà en cours; essayez à nouveau dans un moment"
+
+#: GenericSync.class.php:86
+#@ wpres
+msgid "Api Key is empty"
+msgstr "La clé API n'est pas renseignée"
+
+#: WpRealEstateSync.php:178
+#@ wpres
+msgid "Parameters"
+msgstr "Paramètres"
+
+#: WpRealEstateSync.php:183
+#@ wpres
+msgid "Api Key"
+msgstr "Clé Api"
+
+#: WpRealEstateSync.php:187
+#@ wpres
+msgid "Api Url"
+msgstr "Url de l'API"
+
+#: WpRealEstateSync.php:191
+#@ wpres
+msgid "AutoSync Interval"
+msgstr "Intervalle de synchronisation automatique"
+
+#: WpRealEstateSync.php:284
+#@ wpres
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: WpRealEstateSync.php:285
+#@ wpres
+msgid "Hourly"
+msgstr "Toutes les heures"
+
+#: WpRealEstateSync.php:286
+#@ wpres
+msgid "Twice Daily"
+msgstr "Deux fois par jour"
+
+#: WpRealEstateSync.php:287
+#@ wpres
+msgid "Daily"
+msgstr "Tous les jours"
+
+#: WpRealEstateSync.php:302
+#@ wpres
+msgid "Next Sync will be at : "
+msgstr "Prochaine synchro à : "
+
+#: WpRealEstateSync.php:384
+#@ wpres
+msgid "No sync log available for this date."
+msgstr "Pas de journal disponible à cette date."
+
+#: wp-realestate-sync.php:33
+#, php-format
+#@ wpres
+msgid "You must have PHP version %s"
+msgstr "Vous devez avoir PHP en version %s"
+
+#: wp-realestate-sync.php:38
+#, php-format
+#@ wpres
+msgid "You must have Wordpress version %s"
+msgstr "Vous devez avoir Wordpress en version %s"
+
+#: wp-realestate-sync.php:59
+#, php-format
+#@ wpres
+msgid "Unable to activate the plugin <b>%s</b>:"
+msgstr "Impossible d'activer l'extension <b>%s</b>:"
+
+#: widgets/wpcasa/WpReSyncDpe.class.php:21
+#@ wpres
+msgid "Display DPE for given Ad"
+msgstr "Affiche le DPE pour l'annonce en cours"
+
+#: widgets/wpcasa/WpReSyncDpe.class.php:85
+#@ wpsight
+msgid "Title"
+msgstr "Titre"
+
+#: synchronizers/DecorumSync.class.php:175
+#: synchronizers/WpCasaSync.class.php:150
+#, php-format
+#@ wpres
+msgid "Already up to date (%s > %s)\n"
+msgstr "Déjà à jour (%s > %s)\n"
+
+#: synchronizers/DecorumSync.class.php:179
+#: synchronizers/WpCasaSync.class.php:154
+#, php-format
+#@ wpres
+msgid "Not up to date (%s < %s)\n"
+msgstr "N'est pas à jour (%s < %s)\n"
+
+#: synchronizers/DecorumSync.class.php:198
+#: synchronizers/WpCasaSync.class.php:174
+#, php-format
+#@ wpres
+msgid "New property : %s"
+msgstr "Nouveau bien : %s"
+
+#: synchronizers/DecorumSync.class.php:202
+#: synchronizers/WpCasaSync.class.php:178
+#, php-format
+#@ wpres
+msgid "Could not create property %s: %s"
+msgstr "N'a pas pu créer le bien %s: %s"
+
+#: synchronizers/DecorumSync.class.php:209
+#: synchronizers/WpCasaSync.class.php:185
+#, php-format
+#@ wpres
+msgid "Updating property : %s"
+msgstr "Mise à jour du bien : %s"
+
+#: synchronizers/DecorumSync.class.php:213
+#: synchronizers/WpCasaSync.class.php:189
+#, php-format
+#@ wpres
+msgid "Could not update property %s : %s"
+msgstr "Impossible de mettre à jour le bien %s : %s"
+
+#: synchronizers/DecorumSync.class.php:220
+#: synchronizers/WpCasaSync.class.php:196
+#, php-format
+#@ wpres
+msgid "Saved %s post %s"
+msgstr "Post %s %s enregistré"
+
+#: synchronizers/DecorumSync.class.php:288
+#: synchronizers/WpCasaSync.class.php:302
+#, php-format
+#@ wpres
+msgid "%d photo(s) : "
+msgstr "%d photo(s) : "
+
+#: synchronizers/DecorumSync.class.php:421
+#: synchronizers/DecorumSync.class.php:464
+#: synchronizers/WpCasaSync.class.php:435
+#: synchronizers/WpCasaSync.class.php:478
+#, php-format
+#@ wpres
+msgid "Error : %s"
+msgstr "Erreur : %s"
+
+#: synchronizers/DecorumSync.class.php:427
+#: synchronizers/WpCasaSync.class.php:441
+#@ wpres
+msgid ""
+"\n"
+"\n"
+"Looking up obsolete properties."
+msgstr ""
+"\n"
+"\n"
+"Recherche des biens obsolètes."
+
+#: synchronizers/DecorumSync.class.php:447
+#: synchronizers/WpCasaSync.class.php:461
+#, php-format
+#@ wpres
+msgid "Moving Post %s to trash\n"
+msgstr "Déplacement du Post %s à la corbeille\n"
+
+#: synchronizers/DecorumSync.class.php:459
+#: synchronizers/WpCasaSync.class.php:473
+#, php-format
+#@ wpres
+msgid "Could not trash post %s : %s"
+msgstr "N'a pu déplacer le post %s dans la corbeille : %s"
+
+#: synchronizers/DecorumSync.class.php:471
+#: synchronizers/WpCasaSync.class.php:485
+#@ wpres
+msgid "No property deleted."
+msgstr "Aucun bien supprimé."
+
+#: synchronizers/DecorumSync.class.php:474
+#: synchronizers/WpCasaSync.class.php:488
+#, php-format
+#@ wpres
+msgid "Moved %d property(ies) to trash"
+msgstr "%d biens mis à la corbeille"
+
+#: synchronizers/DecorumSync.class.php:480
+#: synchronizers/WpCasaSync.class.php:494
+#, php-format
+#@ wpres
+msgid "Fatal Error : %s"
+msgstr "Erreur Fatale : %s"
+
+#: synchronizers/WpCasaSync.class.php:53
+#@ wpres
+msgid "Could not guess Properties post type"
+msgstr "Impossible de deviner le type de « custom post » immobilier"
+
+#: templates/admin.php:6
+#@ wpres
+msgid "Options"
+msgstr "Options"
+
+#: templates/admin.php:14
+#@ wpres
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+#: templates/admin.php:21
+#@ wpres
+msgid "Actions"
+msgstr "Actions"
+
+#: templates/admin.php:27
+#@ wpres
+msgid "The properties are currently syncing with Gedeon."
+msgstr "Les biens immobiliers sont en cours de synchronisation avec Gédéon."
+
+#: templates/admin.php:30
+#@ wpres
+msgid "Press this button to refresh this page."
+msgstr "Appuyez sur ce bouton pour actualiser cette page."
+
+#: templates/admin.php:33
+#@ wpres
+msgid "Refresh"
+msgstr "Actualiser"
+
+#: templates/admin.php:35
+#@ wpres
+msgid "You will be able to look at the log details once the syncing is done."
+msgstr "Vous pourrez consulter les journaux une fois la synchronisation terminée."
+
+#: templates/admin.php:39
+#, fuzzy
+#@ wpres
+msgid "Press this button to synchronize the properties from gedon to your site, now."
+msgstr "Appuyez sur ce bouton pour synchroniser les biens immobilier depuis Gédéon vers votre site, maintenant."
+
+#: templates/admin.php:41
+#@ wpres
+msgid "Sync Now !"
+msgstr "Synchroniser Maintenant !"
+
+#: templates/admin.php:46
+#@ wpres
+msgid "Sync Logs"
+msgstr "Journaux de Synchronisation"
+
+#: templates/admin.php:50
+#@ wpres
+msgid "No sync history."
+msgstr "Aucun historique de synchronisation."
+
+#: templates/admin.php:78
+#, php-format
+#@ wpres
+msgid "Sync Logs on %s"
+msgstr "Journal de synchronisation pour le %s"
+
+#: templates/plugin-activated-notice.php:3
+#@ wpres
+msgid "Plugin Gedeon Sync activated."
+msgstr "L'extension « Synchro Gédéon » est activée."
+
+#: templates/plugin-activated-notice.php:6
+#@ wpres
+msgid "Thank you for using the Gedeon Sync plugin."
+msgstr "Merci d'utiliser l'extension « Synchro Gédéon »."
+
+#: templates/plugin-activated-notice.php:10
+#, fuzzy
+#@ wpres
+msgid "You may enter your Gedeon API Key <a href=\"/wp-admin/options-general.php?page=wp-re-sync\">here</a>"
+msgstr "Vous pouvez renseigner votre Clé API Gédéon <a href=\"/wp-admin/options-general.php?page=gedeon-sync\">ici</a>"
+
+#. translators: plugin header field 'Name'
+#: wp-realestate-sync.php:0
+#@ wpres
+msgid "WP RealEstate Sync"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: wp-realestate-sync.php:0
+#@ wpres
+msgid "Synchronizes Wordpress custom posts, from Gedeon API"
+msgstr ""
+
+#. translators: plugin header field 'Author'
+#: wp-realestate-sync.php:0
+#@ wpres
+msgid "Studionet (c)"
+msgstr ""
+
+#. translators: plugin header field 'AuthorURI'
+#: wp-realestate-sync.php:0
+#@ wpres
+msgid "http://www.logiciel-immobilier.com/"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: wp-realestate-sync.php:0
+#@ wpres
+msgid "0.1"
+msgstr ""
+
+#: GenericSync.class.php:174
+#@ wpres
+msgid "Invalid photo size : withxheight expected (ex : 1024x768)"
+msgstr "Taille des photo invalide : longueurxlargeur attendue (ex : 1024x768)"
+
+#: GenericSync.class.php:181
+#@ wpres
+msgid "Invalid photo quality, choose a value between 5 and 100"
+msgstr "Qualité des photo invalide, merci de choisir une valeur entre 5 et 100"
+
+#: synchronizers/WpCasaSync.class.php:251
+#@ wpres
+msgid "Rent"
+msgstr "Location"
+
+#: synchronizers/WpCasaSync.class.php:252
+#@ wpres
+msgid "Sale"
+msgstr "Achat"
+
+#: WpRealEstateSync.php:195
+#@ wpres
+msgid "Quality of pictures"
+msgstr "Qualité des photos"
+
+#: WpRealEstateSync.php:199
+#@ wpres
+msgid "Size of pictures"
+msgstr "Taille des photos"
+

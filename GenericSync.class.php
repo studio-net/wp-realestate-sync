@@ -8,7 +8,7 @@ abstract class GenericSync {
 	
 	/**
 	 * Singleton instance.
-	 * @var WpPluginGedeonSync
+	 * @var WpRealEstateSync
 	 */
 	protected $plugin;
 	
@@ -20,13 +20,21 @@ abstract class GenericSync {
 	protected $adPostType;
 	
 	/**
+	 * Synchronizer's slug.
+	 * 
+	 * @var string
+	 */
+	protected $slug;
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @return void
 	 */
 	public function __construct() {
 		
-		$this->plugin = WpPluginGedeonSync::getInstance();
+		$this->plugin = WpRealEstateSync::getInstance();
+		$this->loadWidgets();
 		
 	}
 	
@@ -51,6 +59,13 @@ abstract class GenericSync {
 	 */
 	protected function initializeSync() {
 		
+		if ($this->hasLock())
+			throw new WpRealEstateSyncException(
+				__("The syncing is already running; try again in a moment",
+			  	"wpres"));
+		
+		$this->setLock();
+		
 		// Some conf to ensure sync will go to the end
 		ignore_user_abort(true);
 		set_time_limit(0);
@@ -63,15 +78,12 @@ abstract class GenericSync {
 		require_once(ABSPATH . 'wp-admin/includes/image.php');
 		
 		// Read Options
-		$options = (array)get_option('gedeon-sync', null);
+		$options = (array)get_option('wp-re-sync', null);
 		
 		// Check api key is not empty
 		if (empty($options['api-key']))
-			throw new WpPluginGedeonSyncException(
-				__("Api Key is empty", "wpgedeon"));
-		
-		
-		
+			throw new WpRealEstateSyncException(
+				__("Api Key is empty", "wpres"));
 		
 	}
 	
@@ -83,9 +95,9 @@ abstract class GenericSync {
 	 */
 	protected function setLock($value = true) {
 		if ($value) {
-			set_transient("gedeon-sync-lock", true, 120);
+			set_transient("wp-re-sync-lock", true, 120);
 		} else {
-			delete_transient("gedeon-sync-lock");
+			delete_transient("wp-re-sync-lock");
 		}
 	}
 
@@ -95,8 +107,85 @@ abstract class GenericSync {
 	 * @return bool
 	 */
 	protected function hasLock() {
-		return (bool)get_transient("gedeon-sync-lock");
+		return (bool)get_transient("wp-re-sync-lock");
 	}
 	
+	/**
+	 * Parse synchronizers widgets dir, read these dirs to find widgets.
+	 *
+	 * @return void
+	 */
+	protected function loadWidgets(){
+
+		$rep = dirname(__FILE__) ."/widgets/". $this->slug;
+		
+		if ( !is_dir($rep))
+			return;
+		
+		$widgets = array();
+
+		// Load widgets
+		$iterator = new DirectoryIterator($rep);
+		foreach ($iterator as $fileinfo) {
+
+			if ($fileinfo->isFile()) {
+
+				require_once $rep .'/'. $fileinfo->getFilename();
+				$widgets[] = str_replace(".class.php", "",
+						  $fileinfo->getFilename());
+
+
+			}
+			
+		}
+				
+		// If some widgets were found
+		if (empty($widgets))
+			return;
+		
+		// Register widgets
+		add_action("widgets_init", function() use ($widgets) {
+			
+			foreach ($widgets as $widget)
+				register_widget($widget);
+			
+		});
+
+
+	}
 	
+	/**
+	 * Get a valid photo format from options.
+	 * 
+	 * Throw WpRealEstateSyncException if data are invalid.
+	 * 
+	 * @param  string $size
+	 * @param  int $quality
+	 * @return string
+	 */
+	protected function getValidPhotoFormatFromOptions($options) {
+		
+		$size = $options["photos-size"];
+		$quality = $options["photos-quality"];
+		
+		// Valid size format
+		if (!preg_match("#\dx\d#", $size)) {
+			throw new WpRealEstateSyncException(
+				__("Invalid photo size : withxheight expected (ex : 1024x768)",
+					"wpres"));
+		}
+		
+		// Valid quality format
+		if (!is_int($quality) and ($quality < 0 or $quality > 100)) {
+			throw new WpRealEstateSyncException(
+				__("Invalid photo quality, choose a value between 5 and 100",
+					"wpres"));
+		}
+		
+		// Build full format
+		return "{$size}q{$quality}>";
+		
+		
+	}
+
 }
