@@ -200,6 +200,8 @@ class RealtoSync extends GenericSync {
 							"_gedeon_id" => $ad->id,
 							"nt_prop_id" => $ad->mandate,
 							"nt_listprice"  => ($ad->price > 0 ? $ad->price : null),
+							// Rent period
+							"nt_period" => $ad->transaction_type == "Location" ? "month" : null,
 							// Bedrooms
 							"nt_bedrooms"  => $x->nb_chambres->value,
 							// Bathrooms
