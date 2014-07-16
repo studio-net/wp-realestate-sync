@@ -47,7 +47,7 @@ class WpRealEstateSync {
 		add_action('plugins_loaded', array($this, 'cbPluginsLoaded'));
 
 		$me = $this;
-		add_action('after_setup_theme', function() use ($me) {
+		add_action('init', function() use ($me) {
 			
 			
 			$me->initializeBestSynchoniser();
@@ -70,7 +70,7 @@ class WpRealEstateSync {
 
 			}
 
-		});
+		}, 100);
 
 		if (get_option('wp-re-sync-just-activated')) {
 

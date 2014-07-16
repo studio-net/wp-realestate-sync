@@ -391,11 +391,11 @@ class WpCasaSync extends GenericSync {
 							}
 						}
 
-						$this->plugin->log("\n");
-
+						$this->plugin->log("\n Features for post $postId...");
+						
 						// Taxonomy : location <-> localization
 						wp_set_object_terms($postId, $ad->localization->city, "location");
-
+						
 						// Taxonomy : type <-> localization
 						$types = array_unique(array(
 							$ad->type->category,
@@ -419,6 +419,8 @@ class WpCasaSync extends GenericSync {
 							$features[] = "Coup de coeur";
 
 						wp_set_object_terms($postId, $features, "feature");
+						
+						$this->plugin->log("OK\n");
 
 					}
 
