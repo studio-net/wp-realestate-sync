@@ -624,7 +624,7 @@ EOHTML;
 			'api-url'            => 'http://api.gedeon.im',
 			'auto-sync-interval' => 'disabled',
 			'photos-quality'     => 55,
-			'photos-size'         => "1024x768"
+			'photos-size'        => "1024x768"
 		);
 		update_option('wp-re-sync', $options);
 
@@ -642,8 +642,6 @@ EOHTML;
 	}
 
 }
-
-
 
 /**
  * Dedicated Exception for WpRealEstateSync

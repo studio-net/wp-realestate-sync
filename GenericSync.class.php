@@ -27,6 +27,20 @@ abstract class GenericSync {
 	protected $slug;
 	
 	/**
+	 * Options cache.
+	 * 
+	 * @var array
+	 */
+	protected $options;
+	
+	/**
+	 * LsiPhpApi instance.
+	 * 
+	 * @var LsiPhpApi
+	 */
+	private $lsiApi;
+	
+	/**
 	 * Constructor.
 	 * 
 	 * @return void
@@ -35,6 +49,9 @@ abstract class GenericSync {
 		
 		$this->plugin = WpRealEstateSync::getInstance();
 		$this->loadWidgets();
+		
+		// Read Options
+		$this->options = (array)get_option('wp-re-sync', null);
 		
 	}
 	
@@ -152,6 +169,53 @@ abstract class GenericSync {
 		});
 
 
+	}
+	
+	/**
+	 * Get LsiPhpApi instance.
+	 * 
+	 * @return LsiPhpApi
+	 */
+	protected function getLsiApi() {
+		
+		if ($this->lsiApi == null) {
+			$this->lsiApi = new LsiPhpApi($this->options['api-key']);
+			$this->lsiApi->setApiUrl($this->options['api-url']);
+		}
+		
+		return $this->lsiApi;
+	
+	}
+	
+	/**
+	 * Get WP user for agencies.
+	 * 
+	 * This is used for themes wich use post author as contact.
+	 * So we need to associate a post with a user wich have agency contact infos.
+	 *   
+	 * @return array (of WP_User)
+	 */
+	protected function getUsersForAgencies() {
+		
+		$agencies = $this->getLsiApi()->get('agencies', array());
+				
+		$users = array();
+		
+		foreach ($agencies->results as $agency) {
+			
+			$userId = username_exists($agency->id);
+			
+			if ( !$userId) {
+				$userId = wp_create_user($agency->id, wp_generate_password(), 
+					_first($agency->contact->emails));
+			}
+			
+			$users[$agency->id] = get_user_by('id', $userId);
+			
+		}
+		
+		return $users;
+		
 	}
 	
 	/**

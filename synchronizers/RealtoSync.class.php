@@ -36,11 +36,8 @@ class RealtoSync extends GenericSync {
 			
 			// Check sync is ready
 			$this->initializeSync();
-
-			// Read Options
-			$options = (array)get_option('wp-re-sync', null);
 			
-			$photoFormat = $this->getValidPhotoFormatFromOptions($options);
+			$photoFormat = $this->getValidPhotoFormatFromOptions($this->options);
 
 			// The "post type" used for realestate properties
 			$adPostType = "property";
@@ -77,8 +74,7 @@ class RealtoSync extends GenericSync {
 
 
 			// Now, load Ads from gedeon API, and do the effective sync.
-			$lsiApi = new LsiPhpApi($options['api-key']);
-			$lsiApi->setApiUrl($options['api-url']);
+			$lsiApi = $this->getLsiApi();
 
 			// We store here posts Ids we have "seen".
 			// We'll remove, after this, unseen posts.

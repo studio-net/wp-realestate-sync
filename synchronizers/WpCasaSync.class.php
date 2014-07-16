@@ -37,10 +37,7 @@ class WpCasaSync extends GenericSync {
 			// Check sync is ready
 			$this->initializeSync();
 
-			// Read Options
-			$options = (array)get_option('wp-re-sync', null);
-			
-			$photoFormat = $this->getValidPhotoFormatFromOptions($options);
+			$photoFormat = $this->getValidPhotoFormatFromOptions($this->options);
 
 			// The "post type" used for realestate properties
 			$adPostType = null;
@@ -80,12 +77,13 @@ class WpCasaSync extends GenericSync {
 
 
 			// Now, load Ads from gedeon API, and do the effective sync.
-			$lsiApi = new LsiPhpApi($options['api-key']);
-			$lsiApi->setApiUrl($options['api-url']);
+			$lsiApi = $this->getLsiApi();
 
 			// We store here posts Ids we have "seen".
 			// We'll remove, after this, unseen posts.
 			$seenPostsIds = array();
+			
+			$users = $this->getUsersForAgencies();
 
 			// Load ads by batches, work until all results are fetched
 			$offset = 0;
@@ -165,7 +163,7 @@ class WpCasaSync extends GenericSync {
 
 						$postData['post_status'] = 'publish';
 						$postData['post_date']   = $ad->stats->created->epoch;
-
+						$postData['post_author'] = $users[$ad->agency->id]->ID;
 
 						// Create or Update Post.
 						if (empty($postData['ID'])) {
@@ -387,7 +385,7 @@ class WpCasaSync extends GenericSync {
 						if (!$isNewPost) {
 							$nbPhotos = count($ad->photos);
 							$attachmentsToRemove = array_slice($currentPhotos, $nbPhotos);
-							foreach ($attachmentsToRemove as $num =>$attachment) {
+							foreach ($attachmentsToRemove as $attachment) {
 								wp_delete_attachment($attachment->ID, true);
 								$this->plugin->log("D");
 							}
