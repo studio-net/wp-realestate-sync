@@ -203,7 +203,7 @@ abstract class GenericSync {
 		
 		foreach ($agencies->results as $agency) {
 			
-			$userId = username_exists($agency->id);
+			$userId = username_exists(sanitize_user($agency->id));
 			
 			if ( !$userId) {
 				$userId = wp_create_user($agency->id, wp_generate_password(), 
