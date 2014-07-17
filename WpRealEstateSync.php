@@ -45,14 +45,10 @@ class WpRealEstateSync {
 		$this->initCron();
 
 		add_action('plugins_loaded', array($this, 'cbPluginsLoaded'));
-
+		
 		$me = $this;
 		add_action('init', function() use ($me) {
-			
-			
-			$me->initializeBestSynchoniser();
 
-			
 			if (isset($_GET['wp-re-sync-now'])) {
 
 				try {
@@ -71,6 +67,14 @@ class WpRealEstateSync {
 			}
 
 		}, 100);
+		
+		add_action('after_setup_theme', function() use ($me) {
+			
+			$me->initializeBestSynchoniser();
+			
+		});
+
+		
 
 		if (get_option('wp-re-sync-just-activated')) {
 
@@ -162,7 +166,7 @@ class WpRealEstateSync {
 	public function cbPluginsLoaded() {
 		// Load plugin textdomain.
 		load_plugin_textdomain('wpres', false,
-			dirname(plugin_basename( __FILE__ )) . '/lang/'); 
+			dirname(plugin_basename( __FILE__ )) . '/lang/');
 	}
 
 	/**
