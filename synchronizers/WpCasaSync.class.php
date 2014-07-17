@@ -139,19 +139,29 @@ class WpCasaSync extends GenericSync {
 							// Update existing property.
 							$postData['ID'] = $post->ID;
 							$isNewPost = false;
-
-							// Skip it if api's as modified before last post update.
-							$postTime = new DateTime($post->post_modified);
-							$adTime = $ad->stats->modified->modify('+ 2 hours');
-
-							if ($postTime > $adTime) {
-								$this->plugin->log(__("Already up to date (%s > %s)\n", 'wpres'),
-									$postTime->format('c'), $adTime->format('c'));
-								continue;
-							} else {
-								$this->plugin->log(__("Not up to date (%s < %s)\n", 'wpres'),
-									$postTime->format('c'), $adTime->format('c'));
+							
+							// Check if ad is up to date
+							if (isset($post->customFields['_gedeon_lastupdate'])) {
+								
+								// Get lastupdate 
+								$lastUpdate = new DateTime(
+									_first($post->customFields['_gedeon_lastupdate']));
+									
+								if ($lastUpdate >=  $ad->stats->modified) {
+									
+									$this->plugin->log(__("Already up to date (%s > %s)\n", 'wpres'),
+										$lastUpdate->format('c'), 
+										$ad->stats->modified->format('c'));
+									
+									continue;
+									
+								}
+								
 							}
+							
+							$this->plugin->log(__("Not up to date (%s < %s)\n", 'wpres'),
+								$lastUpdate->format('c'),
+								$ad->stats->modified->format('c'));
 
 						}
 
@@ -198,7 +208,8 @@ class WpCasaSync extends GenericSync {
 						$x = $ad->extras;
 
 						$metas = array(
-							"_gedeon_id" => $ad->id,
+							"_gedeon_id"         => $ad->id,
+							"_gedeon_lastupdate" => $ad->stats->modified->format("c"),
 							"_listing_id" => $ad->mandate,
 							"_price"      => ($ad->price > 0 ? $ad->price : null),
 							// Bedrooms
@@ -221,7 +232,6 @@ class WpCasaSync extends GenericSync {
 							"_dpe" => $x->dpe_conso_en->value ?: $x->dpe_conso_en_lettre->value,
 							// GES
 							"_ges" => $x->dpe_ges->value ?: $x->dpe_ges_lettre->value,
-
 						);
 
 						// Set transaction_type (in _price_status).
