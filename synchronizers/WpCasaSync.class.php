@@ -157,11 +157,13 @@ class WpCasaSync extends GenericSync {
 									
 								}
 								
+								$this->plugin->log(__("Not up to date (%s < %s)\n", 'wpres'),
+									$lastUpdate->format('c'),
+									$ad->stats->modified->format('c'));
+								
 							}
 							
-							$this->plugin->log(__("Not up to date (%s < %s)\n", 'wpres'),
-								$lastUpdate->format('c'),
-								$ad->stats->modified->format('c'));
+							
 
 						}
 
