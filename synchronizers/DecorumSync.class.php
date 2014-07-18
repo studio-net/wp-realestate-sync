@@ -1,6 +1,8 @@
 <?
 /**
  * Synchronise ads for Decorum theme : http://themeshift.com/theme/decorum/.
+ * 
+ * TODO : use GenericSync for doSync() like.
  *
  * @author Olivier Barou <olivier@studio-net.fr>
  */
