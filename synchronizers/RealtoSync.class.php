@@ -73,6 +73,8 @@ class RealtoSync extends GenericSync {
 				"nt_property_contact_phone" => $ad->contact->phone,
 				// Mail
 				"nt_property_contact_email" => $ad->contact->mail,
+				// Put favorites on homepage
+				"nt_homepage" => $ad->extras->coup_de_coeur->value ? 1 : null,
 				// DPE
 				"_dpe" => $x->dpe_conso_en->value ?: $x->dpe_conso_en_lettre->value,
 				// GES
