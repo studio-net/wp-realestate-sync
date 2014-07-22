@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: WP RealEstate Sync v0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-10 12:00+0100\n"
-"PO-Revision-Date: 2014-06-13 14:29:26+0000\n"
+"PO-Revision-Date: 2014-07-22 10:01:49+0000\n"
 "Last-Translator: Olivier Barou <olivier@studio-net.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,62 +20,62 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: GenericSync.class.php:64
+#: GenericSync.class.php:520
 #@ wpres
 msgid "The syncing is already running; try again in a moment"
 msgstr "Une synchronisation est déjà en cours; essayez à nouveau dans un moment"
 
-#: GenericSync.class.php:86
+#: GenericSync.class.php:542
 #@ wpres
 msgid "Api Key is empty"
 msgstr "La clé API n'est pas renseignée"
 
-#: WpRealEstateSync.php:178
+#: WpRealEstateSync.php:183
 #@ wpres
 msgid "Parameters"
 msgstr "Paramètres"
 
-#: WpRealEstateSync.php:183
+#: WpRealEstateSync.php:188
 #@ wpres
 msgid "Api Key"
 msgstr "Clé Api"
 
-#: WpRealEstateSync.php:187
+#: WpRealEstateSync.php:192
 #@ wpres
 msgid "Api Url"
 msgstr "Url de l'API"
 
-#: WpRealEstateSync.php:191
+#: WpRealEstateSync.php:196
 #@ wpres
 msgid "AutoSync Interval"
 msgstr "Intervalle de synchronisation automatique"
 
-#: WpRealEstateSync.php:284
+#: WpRealEstateSync.php:289
 #@ wpres
 msgid "Disabled"
 msgstr "Désactivé"
 
-#: WpRealEstateSync.php:285
+#: WpRealEstateSync.php:290
 #@ wpres
 msgid "Hourly"
 msgstr "Toutes les heures"
 
-#: WpRealEstateSync.php:286
+#: WpRealEstateSync.php:291
 #@ wpres
 msgid "Twice Daily"
 msgstr "Deux fois par jour"
 
-#: WpRealEstateSync.php:287
+#: WpRealEstateSync.php:292
 #@ wpres
 msgid "Daily"
 msgstr "Tous les jours"
 
-#: WpRealEstateSync.php:302
+#: WpRealEstateSync.php:307
 #@ wpres
 msgid "Next Sync will be at : "
 msgstr "Prochaine synchro à : "
 
-#: WpRealEstateSync.php:384
+#: WpRealEstateSync.php:389
 #@ wpres
 msgid "No sync log available for this date."
 msgstr "Pas de journal disponible à cette date."
@@ -103,78 +103,78 @@ msgstr "Impossible d'activer l'extension <b>%s</b>:"
 msgid "Display DPE for given Ad"
 msgstr "Affiche le DPE pour l'annonce en cours"
 
-#: widgets/wpcasa/WpReSyncDpe.class.php:85
+#: widgets/wpcasa/WpReSyncDpe.class.php:91
 #@ wpsight
 msgid "Title"
 msgstr "Titre"
 
-#: synchronizers/DecorumSync.class.php:175
-#: synchronizers/WpCasaSync.class.php:150
+#: GenericSync.class.php:190
+#: synchronizers/DecorumSync.class.php:177
 #, php-format
 #@ wpres
 msgid "Already up to date (%s > %s)\n"
 msgstr "Déjà à jour (%s > %s)\n"
 
-#: synchronizers/DecorumSync.class.php:179
-#: synchronizers/WpCasaSync.class.php:154
+#: GenericSync.class.php:198
+#: synchronizers/DecorumSync.class.php:181
 #, php-format
 #@ wpres
 msgid "Not up to date (%s < %s)\n"
 msgstr "N'est pas à jour (%s < %s)\n"
 
-#: synchronizers/DecorumSync.class.php:198
-#: synchronizers/WpCasaSync.class.php:174
+#: GenericSync.class.php:222
+#: synchronizers/DecorumSync.class.php:200
 #, php-format
 #@ wpres
 msgid "New property : %s"
 msgstr "Nouveau bien : %s"
 
-#: synchronizers/DecorumSync.class.php:202
-#: synchronizers/WpCasaSync.class.php:178
+#: GenericSync.class.php:226
+#: synchronizers/DecorumSync.class.php:204
 #, php-format
 #@ wpres
 msgid "Could not create property %s: %s"
 msgstr "N'a pas pu créer le bien %s: %s"
 
-#: synchronizers/DecorumSync.class.php:209
-#: synchronizers/WpCasaSync.class.php:185
+#: GenericSync.class.php:233
+#: synchronizers/DecorumSync.class.php:211
 #, php-format
 #@ wpres
 msgid "Updating property : %s"
 msgstr "Mise à jour du bien : %s"
 
-#: synchronizers/DecorumSync.class.php:213
-#: synchronizers/WpCasaSync.class.php:189
+#: GenericSync.class.php:237
+#: synchronizers/DecorumSync.class.php:215
 #, php-format
 #@ wpres
 msgid "Could not update property %s : %s"
 msgstr "Impossible de mettre à jour le bien %s : %s"
 
-#: synchronizers/DecorumSync.class.php:220
-#: synchronizers/WpCasaSync.class.php:196
+#: GenericSync.class.php:244
+#: synchronizers/DecorumSync.class.php:222
 #, php-format
 #@ wpres
 msgid "Saved %s post %s"
 msgstr "Post %s %s enregistré"
 
-#: synchronizers/DecorumSync.class.php:288
-#: synchronizers/WpCasaSync.class.php:302
+#: GenericSync.class.php:289
+#: synchronizers/DecorumSync.class.php:290
 #, php-format
 #@ wpres
 msgid "%d photo(s) : "
 msgstr "%d photo(s) : "
 
-#: synchronizers/DecorumSync.class.php:421
-#: synchronizers/DecorumSync.class.php:464
-#: synchronizers/WpCasaSync.class.php:435
-#: synchronizers/WpCasaSync.class.php:478
+#: GenericSync.class.php:428
+#: GenericSync.class.php:471
+#: synchronizers/DecorumSync.class.php:423
+#: synchronizers/DecorumSync.class.php:466
 #, php-format
 #@ wpres
 msgid "Error : %s"
 msgstr "Erreur : %s"
 
-#: synchronizers/DecorumSync.class.php:427
-#: synchronizers/WpCasaSync.class.php:441
+#: GenericSync.class.php:434
+#: synchronizers/DecorumSync.class.php:429
 #@ wpres
 msgid ""
 "\n"
@@ -185,41 +185,41 @@ msgstr ""
 "\n"
 "Recherche des biens obsolètes."
 
-#: synchronizers/DecorumSync.class.php:447
-#: synchronizers/WpCasaSync.class.php:461
+#: GenericSync.class.php:454
+#: synchronizers/DecorumSync.class.php:449
 #, php-format
 #@ wpres
 msgid "Moving Post %s to trash\n"
 msgstr "Déplacement du Post %s à la corbeille\n"
 
-#: synchronizers/DecorumSync.class.php:459
-#: synchronizers/WpCasaSync.class.php:473
+#: GenericSync.class.php:466
+#: synchronizers/DecorumSync.class.php:461
 #, php-format
 #@ wpres
 msgid "Could not trash post %s : %s"
 msgstr "N'a pu déplacer le post %s dans la corbeille : %s"
 
-#: synchronizers/DecorumSync.class.php:471
-#: synchronizers/WpCasaSync.class.php:485
+#: GenericSync.class.php:478
+#: synchronizers/DecorumSync.class.php:473
 #@ wpres
 msgid "No property deleted."
 msgstr "Aucun bien supprimé."
 
-#: synchronizers/DecorumSync.class.php:474
-#: synchronizers/WpCasaSync.class.php:488
+#: GenericSync.class.php:481
+#: synchronizers/DecorumSync.class.php:476
 #, php-format
 #@ wpres
 msgid "Moved %d property(ies) to trash"
 msgstr "%d biens mis à la corbeille"
 
-#: synchronizers/DecorumSync.class.php:480
-#: synchronizers/WpCasaSync.class.php:494
+#: GenericSync.class.php:487
+#: synchronizers/DecorumSync.class.php:482
 #, php-format
 #@ wpres
 msgid "Fatal Error : %s"
 msgstr "Erreur Fatale : %s"
 
-#: synchronizers/WpCasaSync.class.php:53
+#: GenericSync.class.php:87
 #@ wpres
 msgid "Could not guess Properties post type"
 msgstr "Impossible de deviner le type de « custom post » immobilier"
@@ -312,7 +312,7 @@ msgstr ""
 #: wp-realestate-sync.php:0
 #@ wpres
 msgid "Synchronizes Wordpress custom posts, from Gedeon API"
-msgstr ""
+msgstr "Synchronise les custom post depuis l'API Gedeon. "
 
 #. translators: plugin header field 'Author'
 #: wp-realestate-sync.php:0
@@ -332,33 +332,45 @@ msgstr ""
 msgid "0.1"
 msgstr ""
 
-#: GenericSync.class.php:174
+#: GenericSync.class.php:676
 #@ wpres
 msgid "Invalid photo size : withxheight expected (ex : 1024x768)"
 msgstr "Taille des photo invalide : longueurxlargeur attendue (ex : 1024x768)"
 
-#: GenericSync.class.php:181
+#: GenericSync.class.php:683
 #@ wpres
 msgid "Invalid photo quality, choose a value between 5 and 100"
 msgstr "Qualité des photo invalide, merci de choisir une valeur entre 5 et 100"
 
-#: synchronizers/WpCasaSync.class.php:251
+#: synchronizers/RealtoSync.class.php:105
+#: synchronizers/WpCasaSync.class.php:94
 #@ wpres
 msgid "Rent"
 msgstr "Location"
 
-#: synchronizers/WpCasaSync.class.php:252
+#: synchronizers/RealtoSync.class.php:106
+#: synchronizers/WpCasaSync.class.php:95
 #@ wpres
 msgid "Sale"
 msgstr "Achat"
 
-#: WpRealEstateSync.php:195
+#: WpRealEstateSync.php:200
 #@ wpres
 msgid "Quality of pictures"
 msgstr "Qualité des photos"
 
-#: WpRealEstateSync.php:199
+#: WpRealEstateSync.php:204
 #@ wpres
 msgid "Size of pictures"
 msgstr "Taille des photos"
+
+#: GenericSync.class.php:386
+#, php-format
+#@ wpres
+msgid ""
+"\n"
+" Features for post %s..."
+msgstr ""
+"\n"
+" Avantages pour le post %s..."
 
