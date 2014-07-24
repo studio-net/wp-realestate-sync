@@ -579,7 +579,7 @@ EOHTML;
 			return $val;
 
 		try {
-			return (int)preg_replace('/^\D*|\s/', '', $a);
+			return (int)preg_replace('/^\D*|\s/', '', $val);
 		} catch (Exception $e) {
 			return 0;
 		}
