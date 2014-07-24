@@ -256,8 +256,17 @@ abstract class GenericSync {
 
 						
 						// Create / update post metas
-						foreach ($metas as $key => $value)
-							update_post_meta($postId, $key, $value);
+						foreach ($metas as $key => $value) {
+							
+							if ($value) {
+								// Add post meta only if filled
+								update_post_meta($postId, $key, $value);
+							} else {
+								// Else drop it
+								delete_post_meta($postId, $key);
+							}
+						
+						}
 
 
 						// Create / update post photos.
