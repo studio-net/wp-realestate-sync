@@ -47,7 +47,7 @@ class RealtoSync extends GenericSync {
 			
 			// Bulk-update of post's metas
 			$x = $ad->extras;
-
+			
 			$metas = $metas + array(
 				"nt_prop_id" => $ad->mandate,
 				"nt_listprice"  => ($ad->price > 0 ? $ad->price : null),
@@ -60,7 +60,7 @@ class RealtoSync extends GenericSync {
 				// Plot Size
 				"nt_plot_size"  => $this->plugin->toInt($x->surface_terrain->value),
 				// Living Area
-				"nt_living_area"  => $ad->surface,
+				"nt_living_area"  => $ad->type->category != "Terrain" ? $ad->surface : null,
 				// Terrace
 				"nt_terrace"  => $this->plugin->toInt($x->surface_terrasse->value),
 				// Parking
