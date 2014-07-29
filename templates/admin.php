@@ -23,7 +23,7 @@
 	<?php if ($syncIsRunning): ?>
 
 		<p>
-			<img src="http://icons.lsi.im/spinners/041.gif" alt=""/>
+			<img src="<?=$imgUrl?>/spinner.gif" alt=""/>
 			<?=__("The properties are currently syncing with Gedeon.", "wpres")?>
 		</p>
 
