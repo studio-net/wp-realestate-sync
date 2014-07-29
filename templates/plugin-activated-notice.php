@@ -7,7 +7,8 @@
 	</p>
 
 	<p>
-	<?= __('You may enter your Gedeon API Key <a href="/wp-admin/options-general.php?page=wp-re-sync">here</a>', "wpres") ?>.
+	<?= sprintf(__('You may enter your Gedeon API Key <a href="%s">here</a>', "wpres"), 
+		admin_url("options-general.php?page=wp-re-sync")) ?>.
 	</p>
 
 </div>

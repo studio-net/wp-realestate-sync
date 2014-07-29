@@ -4,7 +4,7 @@ Plugin Name: WP RealEstate Sync
 Description: Synchronizes Wordpress custom posts, from Gedeon API
 Author: Studionet (c)
 Version: 0.1
-Requires at least: 3.5
+Requires at least: 3.8
 Author URI: http://www.logiciel-immobilier.com/
 License: LGPL
 Text Domain: wpres

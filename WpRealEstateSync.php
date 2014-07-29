@@ -34,6 +34,19 @@ class WpRealEstateSync {
 	 * @var mixed
 	 */
 	private $synchronizer = null;
+	
+	/**
+	 * Plugin URL.
+	 * 
+	 * @var string
+	 */
+	private $pluginUrl = null;
+	
+	/**
+	 * Absolute plugin path.
+	 * @var string
+	 */
+	private $pluginPath = null;
 
 	/**
 	 * Constructor, private because i'm singleton
@@ -43,10 +56,16 @@ class WpRealEstateSync {
 	private function __construct() {
 
 		$this->initCron();
+		
+		// Initialize plugin path and URL
+		$this->pluginPath = plugin_dir_path( __FILE__ );
+		$this->pluginUrl = plugins_url( '', __FILE__ );		
+		
 
 		add_action('plugins_loaded', array($this, 'cbPluginsLoaded'));
 		
 		$me = $this;
+		
 		add_action('init', function() use ($me) {
 
 			if (isset($_GET['wp-re-sync-now'])) {
@@ -390,6 +409,7 @@ EOHTML;
 		}
 
 		$syncIsRunning = $this->hasLock();
+		$imgUrl = $this->pluginUrl . "/img";
 
 		include __DIR__ . "/templates/admin.php";
 
@@ -424,7 +444,7 @@ EOHTML;
 	 * @return void
 	 */
 	public function initializeBestSynchoniser() {
-		$basePath = ABSPATH . "wp-content/plugins/wp-realestate-sync/synchronizers";		
+		$basePath = $this->pluginPath . "/synchronizers";		
 		$dir = opendir($basePath);
 		
 		while ($f = readdir($dir)) {
