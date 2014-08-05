@@ -7,8 +7,6 @@
  */
 class WpReSyncDpe extends WpReSyncWidget {
 
-	private $module;
-
 	/** 
 	 * Constructor.
 	 * 
@@ -32,8 +30,8 @@ class WpReSyncDpe extends WpReSyncWidget {
 	public function widget($args, $instance) {
 		
 		$metas = get_post_meta(get_the_ID());		
-		$dpe = _first($metas["_dpe"]);
-		$ges = _first($metas["_ges"]);
+		$dpe = _first((array)$metas["_dpe"]);
+		$ges = _first((array)$metas["_ges"]);
 		
 		// If neither en and ges are filled, display nothing
 		if (empty($dpe) and empty($ges))
