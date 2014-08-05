@@ -281,7 +281,6 @@ abstract class GenericSync {
 							'numberposts' => -1,
 							'post_status' => null,
 							'post_parent' => $postId,
-							'orderby' => 'menu_order',
 						));
 						$currentPhotos = array();
 						foreach ($attachments as $attachment) {
@@ -313,7 +312,15 @@ abstract class GenericSync {
 								$oldTimeStamp = strtotime($attachment->post_modified);
 								if ($oldTimeStamp > $timeStamp) {
 									// Photo is alreay up to date (Valid).
-									$this->plugin->log("V");
+									if ($attachment->menu_order != $photoCnt) {
+										// Assert menu_order.
+										$attachment->menu_order = $photoCnt;
+										wp_update_post($attachment);
+										$this->plugin->log("v"); // valid
+									} else {
+										// Nothing to do
+										$this->plugin->log("V"); // Valid
+									}
 									continue;
 								}
 							}
@@ -335,6 +342,7 @@ abstract class GenericSync {
 								$now = date('Y-m-d H:i:s');
 								$attachment->post_modified = $now;
 								$attachment->post_modified_gmt = $now;
+								$attachment->menu_order = $photoCnt;
 								wp_update_post($attachment);
 
 								// Generate the metadata for the attachment,
@@ -357,6 +365,7 @@ abstract class GenericSync {
 									'post_content'   => '',
 									'post_status'    => 'inherit',
 									'post_name'      => "property_photo_{$ad->id}_{$photoCnt}",
+									'menu_order'     => $photoCnt,
 								);
 
 								// Insert the attachment.
