@@ -11,14 +11,14 @@ Synchronize your properties from your real estate software to your Wordpress web
 
 == Description ==
 
-You can synchronize your real estate Wordpress site with Gedeon API http://api.gedeon.im/doc.
+You can synchronize your real estate Wordpress site with the Gedeon API : http://api.gedeon.im/doc.
 
 Currently supported themes are :
 * WPCasa based (http://wpcasa.com)
 * Realto (http://themeforest.net/item/realto-wordpress-theme-for-real-estate-companies/6801549)
 * Decorum (http://themeshift.com/theme/decorum/)
 
-more are coming soon !
+More themes are coming soon !
 
 
 == Installation ==
@@ -31,7 +31,7 @@ more are coming soon !
 
 = The theme I use is not supported, what can I do ? =
 
-Let us know at wordpress@lsi.im that you are interrested by this particular theme, We will develop a connector as soon as possible, after validate that it's possible for this theme.
+Let us know at wordpress@lsi.im that you are interrested by this particular theme, we will then develop a connector as soon as possible, (after validating the theme).
 
 If your an adventurer, you can develop yourself the compatibility by forking https://github.com/studio-net/wp-realestate-sync
 
@@ -39,7 +39,7 @@ If your an adventurer, you can develop yourself the compatibility by forking htt
 
 1. Take a look at https://github.com/studio-net/wp-realestate-sync to understand how plugin work
 1. Fork the project and develop your own connector.
-1. Or, if your are not a developer, let us know at wordpress@lsi.im that you would be compatible. 
+1. Or, if your are not a developer, let us know at wordpress@lsi.im that you'd like to be compatible, we will help you.
 
 = But, is it a realtime connection with your API ? =
 
@@ -47,7 +47,7 @@ No. Most of the real estate themes stores properties in custom posts. The plugin
 
 A cron import properties at chosen rythm (hourly, daily, ...).
 
-= Okay, but it's only synchronises properties =
+= Okay, but it only synchronises properties =
 
-No, for example it adds a DPE (french-specific energy consumption indicator) Widget to WPCasa based themes. Others features like that are planned.
+No, for example it adds a DPE widget (french-specific energy consumption indicator) to WPCasa based themes. Others features like that are planned.
 
