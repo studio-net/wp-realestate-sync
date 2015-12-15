@@ -28,7 +28,7 @@ more are coming soon !
 
 Let us know at wordpress@lsi.im that you are interrested by this particular theme, We will develop a connector as soon as possible, after validate that it's possible for this theme.
 
-If your an adventurer, you can develop yourself the compatibility by forking theis repo.
+If you are an adventurer, you can develop yourself the compatibility by forking this repo.
 
 ### I'm a theme creator, I want to be compatible with your plugin, what can I do?
 
