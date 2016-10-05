@@ -421,6 +421,12 @@ abstract class GenericSync {
 								$features[] = $extra->name;
 						}
 
+						// adds favorites features, it's an hidden field,
+						// but we need it
+						if (isset($ad->extras->favoris) and
+							$ad->extras->favoris->value) {
+							$features[] = "Favoris";
+						}
 						// Also adds "favorite" and "exclusivite"
 						if ($ad->extras->type_mandat->value == "exclusif")
 							$features[] = "Exclusivité";
