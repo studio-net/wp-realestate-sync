@@ -184,9 +184,9 @@ abstract class GenericSync {
 								// Get lastupdate 
 								$lastUpdate = new DateTime(
 									_first($post->customFields['_gedeon_lastupdate']));
-									
-								if ($lastUpdate >=  $ad->stats->modified) {
-									
+
+								if ($lastUpdate >=  $ad->stats->updated) {
+
 									$this->plugin->log(__("Already up to date (%s > %s)\n", 'wpres'),
 										$lastUpdate->format('c'), 
 										$ad->stats->modified->format('c'));
