@@ -5,42 +5,41 @@
  * @author Olivier Barou <olivier@studio-net.fr>
  */
 class WpCasaSync extends GenericSync {
-	
+
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function __construct() {
-		
+
 		$this->slug = "wpcasa";
-		
+
 		parent::__construct();
-		
+
 		// Set hooks
 		$this->addSyncHooks();
-		
+
 		// Set post_type name
-		$this->adPostType = wpsight_listing_post_type();
+		$this->adPostType = 'listing';
 
 	}
-	
+
 	/**
 	 * Override.
 	 */
 	public static function checkCompatibilty() {
-		return function_exists('wpsight_listing_post_type');
-		
+		return class_exists('WPSight_Framework');
 	}
-	
+
 	/**
 	 * Hooks for specific things to import.
 	 */
 	private function addSyncHooks() {
-		
+
 		// Filter for metas
 		add_filter("wp_re_sync_ad_meta_import", function($metas, $ad, $postId){
-			
+
 			// Bulk-update of post's metas
 			$x = $ad->extras;
 
@@ -72,37 +71,37 @@ class WpCasaSync extends GenericSync {
 			// Set transaction_type (in _price_status).
 			// FIXME: we should add more status, with the filter
 			// "wpsight_listing_statuses".
-			switch ($ad->transaction_type) {
-			case "Location":
-			case "Location de Vacances":
+			switch ($ad->transaction_code) {
+			case "R":
+			case "H":
 				$metas['_price_status'] = "rent";
 				break;
-			case "Vente":
-			case "Viager":
-			case "Bien Vendu":
+			case "S":
+			case "L":
+			case "O":
 			default:
 				$metas['_price_status'] = "sale";
 				break;
 			}
-			
+
 			// Sold/rented, based on transaction type.
 			$metas['_price_sold_rented'] =
-				(int)($ad->transaction_type == "Bien Vendu");
-			
+				(int)($ad->transaction_code == "O");
+
 			// Categories (mainly for i18n)
 			$categories = array(
 				"rent" <= __("Rent", "wpres"),
 				"sale" <= __("Sale", "wpres"),
 			);
-			
+
 			// Create category or return ID of existing category
 			$catId = wp_create_category(
 				$categories[$metas['_price_status']]);
-			
-			// Add category to post 
+
+			// Add category to post
 			// (endind true mean "append category")
 			wp_set_post_categories($postId, $catId, true);
-			
+
 
 			$loc = $ad->localization;
 			$address = "";
@@ -110,11 +109,11 @@ class WpCasaSync extends GenericSync {
 				$address .= "$loc->address, ";
 			$address .= "$loc->zip_code $loc->city";
 			$metas["_map_address"] = trim($address);
-			
+
 			return $metas;
-			
+
 		}, 10, 3);
 
 	}
-	
+
 }
