@@ -10,10 +10,6 @@ WP-realestate-sync is a Wordpress plugin which allow you to synchronize your rea
 Currently supported themes are :
 * WPCasa based (http://wpcasa.com)
 * Realto (http://themeforest.net/item/realto-wordpress-theme-for-real-estate-companies/6801549)
-* Decorum (http://themeshift.com/theme/decorum/)
-
-more are coming soon !
-
 
 ## Installation
 
@@ -34,7 +30,7 @@ If you are an adventurer, you can develop yourself the compatibility by forking 
 
 1. Take a look to understand how plugin work
 1. Fork the project and develop your own connector.
-1. Or, if your are not a developer, let us know at wordpress@lsi.im that you would be compatible. 
+1. Or, if your are not a developer, let us know at wordpress@lsi.im that you would be compatible.
 
 ### But, is it a realtime connection with your API ?
 
@@ -46,6 +42,12 @@ A cron import properties at chosen rythm (hourly, daily, ...).
 
 No, for example it adds a DPE (french-specific energy consumption indicator) Widget to WPCasa based themes. Others features like that are planned.
 
+## Who are we ?
 
+We are Studio-net, a french software-engineering company specialized in realestate ads storage and diffusion.
 
+We are connected to a large majority of french realestate softwares and are able to send ads wherever you want.
 
+Please look at https://gedeon.im/ (french only) if you are a developer and whish to send us ads.
+
+We also are editor of https://www.lesiteimmo.com
